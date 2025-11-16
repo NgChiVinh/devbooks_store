@@ -29,6 +29,7 @@
 
         <div class="main-content">
 
+            <!-- SIDEBAR -->
             <aside class="modern-sidebar">
                 <h2>Danh mục</h2>
                 <ul class="category-list">
@@ -36,39 +37,46 @@
                         <a th:href="@{/products}"
                            th:classappend="${activeCategory == null} ? 'active' : ''">Tất cả sách</a>
                     </li>
+
                     <li th:each="category : ${categories}">
                         <a th:href="@{/category/{id}(id=${category.id})}"
                            th:text="${category.name}"
-                           th:classappend="${activeCategory != null && activeCategory == category.id} ? 'active' : ''">
-                            Tên Danh mục
+                           th:classappend="${activeCategory != null and activeCategory == category.id} ? 'active' : ''">
                         </a>
                     </li>
                 </ul>
-
             </aside>
 
+            <!-- MAIN PRODUCT AREA -->
             <section class="book-area">
 
-                <div th:if="${bookPage == null OR bookPage.empty}">
+                <!-- nếu rỗng -->
+                <div th:if="${bookPage == null or bookPage.empty}">
                     <p>Không tìm thấy cuốn sách nào phù hợp.</p>
                 </div>
 
-                <div class="book-list-container" th:if="${!bookPage.empty}">
+                <!-- DANH SÁCH SẢN PHẨM -->
+                <div class="book-list-container" th:if="${bookPage != null and not bookPage.empty}">
 
                     <div th:each="book : ${bookPage.content}" class="modern-card">
 
                         <div class="book-img-container">
                             <a th:href="@{/book/{id}(id=${book.id})}">
                                 <img th:src="${book.coverImageUrl ?: '/images/default.png'}"
-                                     th:alt="${book.title}" class="book-cover-img" />
+                                     th:alt="${book.title}"
+                                     class="book-cover-img" />
                             </a>
                         </div>
 
                         <div class="book-info">
-                            <a th:href="@{/book/{id}(id=${book.id})}" class="book-title" th:text="${book.title}">Tên Sách</a>
-                            <p class="book-author" th:text="${book.author}">Tác giả</p>
+                            <a th:href="@{/book/{id}(id=${book.id})}"
+                               class="book-title"
+                               th:text="${book.title}"></a>
+
+                            <p class="book-author" th:text="${book.author}"></p>
+
                             <p class="price"
-                               th:text="${#numbers.formatDecimal(book.price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">Giá</p>
+                               th:text="${#numbers.formatDecimal(book.price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></p>
                         </div>
 
                         <div class="book-card-footer">
@@ -77,44 +85,99 @@
                                   th:action="@{/cart/add/{id}(id=${book.id})}"
                                   method="post"
                                   class="add-to-cart-form">
-                                <button type="submit" class="btn-add-cart-bottom">
-                                    Thêm vào giỏ
-                                </button>
+                                <button type="submit" class="btn-add-cart-bottom">Thêm vào giỏ</button>
                             </form>
 
                             <div th:if="${book.stockQuantity <= 0}">
-                                <button type="button" class="btn-out-of-stock" disabled>
-                                    Đã hết hàng
-                                </button>
+                                <button type="button" class="btn-out-of-stock" disabled>Đã hết hàng</button>
                             </div>
 
                         </div>
 
-                </div> <nav aria-label="Page navigation" class="pagination-container" th:if="${bookPage.totalPages > 1}">
-                <ul class="pagination">
+                    </div> <!-- END modern-card -->
 
-                    <li class="page-item" th:classappend="${bookPage.first} ? 'disabled' : ''">
-                        <a class="page-link" th:href="@{${searchKeyword != null ? '/search?keyword=' + searchKeyword + '&' : (activeCategory != null ? '/category/' + activeCategory + '?' : '/products?') + 'page=' + (currentPage - 1)}}">«</a>
-                    </li>
+                </div> <!-- END book-list-container -->
 
-                    <li class="page-item" th:each="pageNumber : ${pageNumbers}"
-                        th:classappend="${pageNumber - 1 == currentPage} ? 'active' : ''">
-                        <a class="page-link" th:href="@{${searchKeyword != null ? '/search?keyword=' + searchKeyword + '&' : (activeCategory != null ? '/category/' + activeCategory + '?' : '/products?') + 'page=' + (pageNumber - 1)}}"
-                           th:text="${pageNumber}"></a>
-                    </li>
+                <!-- PAGINATION - đặt ngoài grid card để không bị dính vào box -->
+                <nav aria-label="Page navigation"
+                     class="pagination-container"
+                     th:if="${bookPage != null and bookPage.totalPages > 1}">
+                    <ul class="pagination">
 
-                    <li class="page-item" th:classappend="${bookPage.last} ? 'disabled' : ''">
-                        <a class="page-link" th:href="@{${searchKeyword != null ? '/search?keyword=' + searchKeyword + '&' : (activeCategory != null ? '/category/' + activeCategory + '?' : '/products?') + 'page=' + (currentPage + 1)}}">»</a>
-                    </li>
-                </ul>
-            </nav>
+                        <!-- PREV -->
+                        <li class="page-item"
+                            th:classappend="${bookPage.first} ? 'disabled' : ''">
 
-            </section> </div>
+                            <!-- nếu search -->
+                            <a class="page-link"
+                               th:if="${searchKeyword != null}"
+                               th:href="@{/search(keyword=${searchKeyword}, page=${currentPage - 1})}">«</a>
+
+                            <!-- nếu đang xem category -->
+                            <a class="page-link"
+                               th:if="${searchKeyword == null and activeCategory != null}"
+                               th:href="@{/category/{id}(id=${activeCategory}, page=${currentPage - 1})}">«</a>
+
+                            <!-- default products -->
+                            <a class="page-link"
+                               th:if="${searchKeyword == null and activeCategory == null}"
+                               th:href="@{/products(page=${currentPage - 1})}">«</a>
+                        </li>
+
+                        <!-- PAGE NUMBERS -->
+                        <li class="page-item"
+                            th:each="pageNumber : ${pageNumbers}"
+                            th:classappend="${pageNumber - 1 == currentPage} ? 'active' : ''">
+
+                            <!-- search case -->
+                            <a class="page-link"
+                               th:if="${searchKeyword != null}"
+                               th:href="@{/search(keyword=${searchKeyword}, page=${pageNumber - 1})}"
+                               th:text="${pageNumber}"></a>
+
+                            <!-- category case -->
+                            <a class="page-link"
+                               th:if="${searchKeyword == null and activeCategory != null}"
+                               th:href="@{/category/{id}(id=${activeCategory}, page=${pageNumber - 1})}"
+                               th:text="${pageNumber}"></a>
+
+                            <!-- default products -->
+                            <a class="page-link"
+                               th:if="${searchKeyword == null and activeCategory == null}"
+                               th:href="@{/products(page=${pageNumber - 1})}"
+                               th:text="${pageNumber}"></a>
+                        </li>
+
+                        <!-- NEXT -->
+                        <li class="page-item"
+                            th:classappend="${bookPage.last} ? 'disabled' : ''">
+
+                            <a class="page-link"
+                               th:if="${searchKeyword != null}"
+                               th:href="@{/search(keyword=${searchKeyword}, page=${currentPage + 1})}">»</a>
+
+                            <a class="page-link"
+                               th:if="${searchKeyword == null and activeCategory != null}"
+                               th:href="@{/category/{id}(id=${activeCategory}, page=${currentPage + 1})}">»</a>
+
+                            <a class="page-link"
+                               th:if="${searchKeyword == null and activeCategory == null}"
+                               th:href="@{/products(page=${currentPage + 1})}">»</a>
+                        </li>
+                    </ul>
+                </nav>
+
+            </section>
+
+        </div> <!-- END main-content -->
+
     </div>
 </main>
 
 <div th:insert="~{fragments/footer-snippet :: footer}"></div>
+
 <script th:src="@{/js/cart.js}"></script>
 <script th:src="@{/js/dropdown.js}"></script>
+
 </body>
 </html>

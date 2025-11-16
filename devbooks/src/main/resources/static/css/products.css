@@ -183,7 +183,7 @@ a.book-title:hover {
 
 /* ========== PHÂN TRANG ========== */
 .pagination-container {
-  margin-top: 40px;
+  padding-top: 20px;
   margin-bottom: 60px;
   display: flex;
   justify-content: center;
@@ -195,35 +195,32 @@ a.book-title:hover {
   display: flex;
   gap: 8px;
   padding: 0;
-  margin: 0;
 }
 
 .page-item .page-link {
   display: block;
-  padding: 10px 15px;
-  text-align: center;
+  padding: 9px 14px;
   text-decoration: none;
-  color: #007bff;
+  color: #555;
   background-color: #fff;
   border: 1px solid #ddd;
-  border-radius: 5px;
-  transition: all 0.2s;
+  border-radius: 6px;
+  transition: all 0.25s;
 }
 
 .page-item .page-link:hover {
-  background-color: #f4f4f4;
+  background-color: #f0f0f0;
 }
 
 .page-item.active .page-link {
-  background-color: #007bff;
-  color: white;
-  border-color: #007bff;
+  background-color: #111;
+  color: #fff;
+  border-color: #111;
 }
 
 .page-item.disabled .page-link {
-  color: #ccc;
+  color: #aaa;
   pointer-events: none;
-  background-color: #f9f9f9;
 }
 
 /* ========== RESPONSIVE ========== */
