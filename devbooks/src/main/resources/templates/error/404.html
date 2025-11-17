@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/springsecurity6">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Không Tìm Thấy Trang - DevBooks</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" th:href="@{/css/style.css(v=${#dates.createNow().getTime()})}">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #e0f7fa, #a2d5f2);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main.main-body-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .error-page-container {
+            background-color: #fff;
+            padding: 50px 40px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 700px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Illustration SVG */
+        .error-illustration {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 25px;
+            animation: float 2s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* Số 404 nổi bật với hover interactive */
+        .error-code {
+            font-size: 8rem;
+            font-weight: 900;
+            color: #0096c7;
+            margin: 0;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .error-code:hover {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .error-page-container h1 {
+            font-size: 2rem;
+            color: #333;
+            margin: 15px 0;
+        }
+
+        .error-page-container p {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 35px;
+            line-height: 1.6;
+        }
+
+        .btn-home {
+            display: inline-block;
+            background-color: #0096c7;
+            color: #fff;
+            padding: 14px 30px;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0,150,199,0.3);
+        }
+
+        .btn-home:hover {
+            background-color: #0077a3;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0,150,199,0.4);
+        }
+
+        /* Mini falling books effect */
+        .book {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #00b4d8;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            border-radius: 3px;
+            opacity: 0.8;
+            animation: fall 2s linear forwards;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(200px) rotate(360deg); opacity: 0; }
+        }
+
+        @media (max-width: 768px) {
+            .error-code { font-size: 6rem; }
+            .error-page-container h1 { font-size: 1.8rem; }
+            .error-illustration { width: 120px; height: 120px; }
+        }
+
+        @media (max-width: 480px) {
+            .error-code { font-size: 4.5rem; }
+            .error-page-container h1 { font-size: 1.5rem; }
+            .error-illustration { width: 100px; height: 100px; }
+            .btn-home { padding: 12px 25px; font-size: 0.9rem; }
+        }
+    </style>
+</head>
+
+<body>
+<div th:insert="~{fragments/header-snippet :: navbar}"></div>
+
+<main class="main-body-content">
+    <div class="error-page-container">
+        <!-- Illustration SVG 404 -->
+        <svg class="error-illustration" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+            <path fill="#0096c7" d="M32 0C14.355 0 0 14.355 0 32s14.355 32 32 32 32-14.355 32-32S49.645 0 32 0zm0 58C17.664 58 6 46.336 6 32S17.664 6 32 6s26 11.664 26 26-11.664 26-26 26z"/>
+            <path fill="#00bcd4" d="M42 24c-1.105 0-2 .895-2 2v12c0 1.105.895 2 2 2s2-.895 2-2V26c0-1.105-.895-2-2-2zm-20 0c-1.105 0-2 .895-2 2v12c0 1.105.895 2 2 2s2-.895 2-2V26c0-1.105-.895-2-2-2z"/>
+        </svg>
+
+        <h1 class="error-code">404</h1>
+        <h1>Oops! Không tìm thấy trang</h1>
+        <p>Rất tiếc, trang bạn đang tìm kiếm không tồn tại hoặc đã bị di chuyển. Hãy quay lại trang chủ để tiếp tục khám phá kho sách chất lượng của DevBooks.</p>
+        <a th:href="@{/}" class="btn-home">
+            <i class="fas fa-home"></i> Quay về Trang chủ
+        </a>
+    </div>
+</main>
+
+<div th:insert="~{fragments/footer-snippet :: footer}"></div>
+
+<script th:src="@{/js/dropdown.js}"></script>
+<script>
+    // Tạo hiệu ứng rơi sách khi hover vào số 404
+    const errorCode = document.querySelector('.error-code');
+    const container = document.querySelector('.error-page-container');
+
+    errorCode.addEventListener('mouseenter', () => {
+        for (let i = 0; i < 6; i++) {
+            const book = document.createElement('div');
+            book.classList.add('book');
+            book.style.left = Math.random() * 100 + '%';
+            book.style.animationDuration = (1.5 + Math.random()) + 's';
+            container.appendChild(book);
+            setTimeout(() => container.removeChild(book), 2000);
+        }
+    });
+</script>
+</body>
+</html>
