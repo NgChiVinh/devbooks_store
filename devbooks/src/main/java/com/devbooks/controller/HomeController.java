@@ -75,6 +75,26 @@ public class HomeController {
     }
 
     /**
+     * ✅ HÀM MỚI: Hiển thị trang Giới Thiệu
+     * URL: GET /about
+     */
+    @GetMapping("/about")
+    public String showAboutPage(Model model) {
+        model.addAttribute("activePage", "about"); // Kích hoạt Navbar
+        return "user/about"; // Trả về file templates/user/about.html
+    }
+
+    /**
+     * ✅ HÀM MỚI: Hiển thị trang Liên Hệ
+     * URL: GET /contact
+     */
+    @GetMapping("/contact")
+    public String showContactPage(Model model) {
+        model.addAttribute("activePage", "contact"); // Kích hoạt Navbar
+        return "user/contact"; // Trả về file templates/user/contact.html
+    }
+
+    /**
      * ✅ HÀM ĐÃ ĐƯỢC KHÔI PHỤC
      * Xử lý trang chi tiết sách
      */

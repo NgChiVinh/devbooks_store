@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/springsecurity6">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giới Thiệu - DevBooks</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" th:href="@{/css/style.css(v=${#dates.createNow().getTime()})}">
+    <link rel="stylesheet" th:href="@{/css/info-pages.css(v=${#dates.createNow().getTime()})}">
+</head>
+
+<body>
+
+<div th:insert="~{fragments/header-snippet :: navbar}"></div>
+
+<section class="info-page-header">
+    <div class="container">
+        <h1 class="page-title"> DevBooks</h1>
+        <p class="page-subtitle">Kiến thức hôm nay, thành công ngày mai.</p>
+    </div>
+</section>
+
+<main class="info-page-container">
+    <div class="container">
+        <section class="about-section">
+            <div class="about-image">
+                <img th:src="@{/images/about-mission.jpg}" alt="Sứ mệnh của DevBooks" />
+            </div>
+            <div class="about-text">
+                <h2><i class="fas fa-rocket"></i> Sứ Mệnh Của Chúng Tôi</h2>
+                <p>
+                    DevBooks không chỉ là một hiệu sách trực tuyến. Chúng tôi là một thư viện kỹ thuật số được tuyển chọn kỹ lưỡng, dành riêng cho cộng đồng lập trình viên. Sứ mệnh của chúng tôi là cung cấp nguồn tài liệu lập trình cập nhật, chính xác và chất lượng nhất, giúp các developer Việt Nam nâng cao kiến thức và phát triển sự nghiệp.
+                </p>
+                <p>
+                    Chúng tôi tin rằng tri thức là chìa khóa để mở ra tiềm năng vô hạn. Tầm nhìn của DevBooks là trở thành cầu nối vững chắc, giúp các lập trình viên Việt Nam tiếp cận nhanh chóng với những cuốn sách kinh điển của ngành và những công nghệ mới nhất trên thế giới.
+                </p>
+            </div>
+        </section>
+
+        <section class="values-section">
+            <h2 class="section-title-center">Giá Trị Cốt Lõi</h2>
+            <div class="values-grid">
+                <div class="value-item">
+                    <i class="fas fa-check-circle"></i>
+                    <h4>Chất Lượng Tuyển Chọn</h4>
+                    <p>Mỗi cuốn sách trên DevBooks đều được tuyển chọn dựa trên đánh giá chuyên môn, đảm bảo tính thực tiễn và giá trị lâu dài.</p>
+                </div>
+                <div class="value-item">
+                    <i class="fas fa-sync-alt"></i>
+                    <h4>Luôn Cập Nhật</h4>
+                    <p>Thế giới công nghệ thay đổi mỗi ngày. Chúng tôi cam kết liên tục cập nhật những đầu sách mới nhất theo xu hướng toàn cầu.</p>
+                </div>
+                <div class="value-item">
+                    <i class="fas fa-users"></i>
+                    <h4>Vì Cộng Đồng</h4>
+                    <p>DevBooks được xây dựng bởi lập trình viên, và dành cho lập trình viên. Chúng tôi hỗ trợ và phát triển cùng cộng đồng.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+<div th:insert="~{fragments/footer-snippet :: footer}"></div>
+
+<script th:src="@{/js/dropdown.js}"></script>
+</body>
+</html>

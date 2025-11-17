@@ -8,35 +8,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${book.title} + ' - DevBooks'">Chi tiết Sách</title>
 
-    <!-- Font Awesome -->
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
           integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
           crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <!-- CSS dùng chung + chi tiết sản phẩm -->
     <link rel="stylesheet" th:href="@{/css/style.css(v=${#dates.createNow().getTime()})}">
     <link rel="stylesheet" th:href="@{/css/product-detail.css(v=${#dates.createNow().getTime()})}">
 </head>
 
 <body>
-<!-- HEADER -->
 <div th:insert="~{fragments/header-snippet :: navbar}"></div>
 
-<!-- MAIN -->
 <main class="main-body-content">
+
+    <div class="breadcrumb-container">
+        <div class="container">
+            <a th:href="@{/}" class="breadcrumb-link">Trang chủ</a>
+            <span class="breadcrumb-divider">/</span>
+            <a th:href="@{/products}" class="breadcrumb-link">Sản phẩm</a>
+            <span class="breadcrumb-divider">/</span>
+            <span class="breadcrumb-current" th:text="${book.title}">Tên sách</span>
+        </div>
+    </div>
+
     <div class="container product-detail-container">
 
         <div class="product-detail-layout">
 
-            <!-- Cột trái: Hình ảnh -->
             <div class="product-image-gallery">
                 <img th:src="${book.coverImageUrl ?: '/images/default.png'}"
                      th:alt="${book.title}"
                      class="main-product-image" />
             </div>
 
-            <!-- Cột phải: Thông tin -->
             <div class="product-info-main">
                 <h1 class="product-title-detail" th:text="${book.title}">Tên Sách Lớn</h1>
 
@@ -50,18 +55,35 @@
                     Giá Tiền
                 </p>
 
-                <!-- Nút thêm giỏ hàng -->
+                <div class="product-stock-level"
+                     th:if="${book.stockQuantity > 0 AND book.stockQuantity <= 10}">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Chỉ còn <strong th:text="${book.stockQuantity}"></strong> sản phẩm!
+                </div>
+
+                <div class="product-stock-level out-of-stock"
+                     th:if="${book.stockQuantity <= 0}">
+                    <i class="fas fa-times-circle"></i>
+                    Đã hết hàng
+                </div>
                 <div class="product-actions">
-                    <form th:action="@{/cart/add/{id}(id=${book.id})}"
+
+                    <form th:if="${book.stockQuantity > 0}"
+                          th:action="@{/cart/add/{id}(id=${book.id})}"
                           method="post"
                           class="add-to-cart-form">
                         <button type="submit" class="btn-add-cart-bottom">
                             <i class="fas fa-cart-plus"></i> Thêm vào giỏ hàng
                         </button>
                     </form>
-                </div>
 
-                <!-- Mô tả -->
+                    <div th:if="${book.stockQuantity <= 0}">
+                        <button type="button" class="btn-out-of-stock" disabled>
+                            Đã hết hàng
+                        </button>
+                    </div>
+
+                </div>
                 <div class="product-description">
                     <h2><i class="fa-regular fa-file-lines"></i> Mô tả sách</h2>
                     <p th:text="${book.description}">
@@ -73,7 +95,6 @@
     </div>
 </main>
 
-<!-- FOOTER -->
 <div th:insert="~{fragments/footer-snippet :: footer}"></div>
 
 <script th:src="@{/js/cart.js}"></script>

@@ -52,7 +52,7 @@ public class SecurityConfig {
                         // 2. CÔNG KHAI
                         .requestMatchers(
                                 "/", "/home", "/register", "/book/**", "/login",
-                                "/products", "/category/**", "/search"
+                                "/products", "/category/**", "/search", "/about", "/contact"
                         ).permitAll()
 
                         // 3. ✅ SỬA LỖI GIỎ HÀNG

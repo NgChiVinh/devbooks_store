@@ -134,3 +134,102 @@
         font-size: 2rem;
     }
 }
+
+/* ===================================== */
+/* BREADCRUMB */
+/* ===================================== */
+
+.breadcrumb-container {
+    background: #f5f7fa;
+    padding: 16px 0;
+    border-bottom: 1px solid #e5e7eb;
+    margin-bottom: 24px;
+}
+
+.breadcrumb-container .container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+}
+
+.breadcrumb-link {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+.breadcrumb-link:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb-divider {
+    color: #666;
+}
+
+.breadcrumb-current {
+    font-weight: 600;
+    color: #333;
+}
+
+/* ===================================== */
+/* Nâng UI nhẹ */
+/* ===================================== */
+
+.product-title-detail {
+    font-size: 2.6rem;
+    line-height: 1.3;
+}
+
+.product-author-detail {
+    margin-top: 10px;
+}
+
+.product-price-detail {
+    margin-top: 10px;
+}
+
+.btn-add-cart-bottom {
+    font-size: 1.15rem;
+    padding: 14px 36px;
+}
+/* ... (Code .product-price-detail của bạn) ... */
+
+/* === CSS MỚI CHO TỒN KHO === */
+.product-stock-level {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #e67e22; /* Màu cam cảnh báo */
+    margin-bottom: 25px;
+    padding: 10px 15px;
+    background-color: #fff9f0;
+    border: 1px solid #e67e22;
+    border-radius: 5px;
+}
+.product-stock-level i {
+    margin-right: 8px;
+}
+.product-stock-level.out-of-stock {
+    color: #e34c38; /* Màu đỏ (hết hàng) */
+    background-color: #fdf5f4;
+    border-color: #e34c38;
+}
+
+/* === CSS MỚI CHO NÚT HẾT HÀNG === */
+/* (Nút này lấy từ products.css nhưng được tùy chỉnh) */
+.btn-out-of-stock {
+    background: #f4f7f9;
+    color: #999;
+    border: 2px solid #eee;
+    border-radius: 6px;
+    padding: 14px 28px; /* Làm cho nút to bằng nút Thêm */
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: not-allowed;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
